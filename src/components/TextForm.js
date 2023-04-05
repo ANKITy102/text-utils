@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+let isspeak = 1;
 export default function TextForm(props) {
     const [text, setText] = useState('Enter text here');
     const handleUpClick = () => {
@@ -14,7 +15,6 @@ export default function TextForm(props) {
         navigator.clipboard.writeText(text.value);
         props.showAlert("success", "Text has been copied")
     }
-    let isspeak = 1;
     const speak = () => {
         let msg = new SpeechSynthesisUtterance();
         msg.text = text;
@@ -45,6 +45,14 @@ export default function TextForm(props) {
         setText(newText.join(" "));
         props.showAlert("success", "Extra spaces has been removed")
     }
+    const countRend = () => {
+        let arr = text.split(" ");
+        let count = arr.length;
+        if (arr[count - 1] === "") {
+            count--;
+        }
+        return count;
+    }
     // text = "new text" -->wrong way to change he state
     // setText("")    -->correct way to change the state
 
@@ -63,7 +71,7 @@ export default function TextForm(props) {
             </div>
             <div className="container my-3">
                 <h1>Your text summary</h1>
-                <p> {text.split(" ").length} words and {text.length} characters</p>
+                <p> {countRend()} words and {text.length} characters</p>
                 <p>{0.008 * text.split(" ").length} Minutes read</p>
                 <h2>preveiw</h2>
                 <p>{text}</p>
